@@ -1,0 +1,83 @@
+<ion-toolbar>
+  <ion-title>
+    Creditos
+  </ion-title>
+</ion-toolbar>
+
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-spinner *ngIf="searching" class="center-spinner"></ion-spinner>
+  <ion-searchbar [debounce]="700" placeholder="Productos" class="icono_buscador custom-searchbar" [(ngModel)]="searchTerm" (ionInput)="filterCreditos($event)"></ion-searchbar>
+ 
+  <table class="font">
+    <thead>
+      
+      <tr>
+        <ion-toolbar>
+        <th>Codigo factura</th>
+        <th>Nombre</th>
+      </ion-toolbar>
+      </tr>
+      
+    </thead>
+    <tbody>
+      
+      <div class="table-wrapper">
+      <ion-accordion-group expand="inset">
+        
+        <div *ngFor="let credito of filteredCreditos">
+          <ion-accordion [value]="credito.contador">
+            <ion-item slot="header" color="light" >
+              
+              <tr class="input-wrapper">
+                <td class="fa">{{ credito.contador}}</td>
+                <td class="nom">{{ credito.productos.length > 15 ? credito.productos.slice(0, 15) + '...' : credito.productos }}</td>
+              </tr>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <tr>
+                <td>C.C cliente:</td>
+                <td>{{ credito.cliente }}</td>
+              </tr>
+              <tr>
+                <td>Fecha de venta: </td>
+                <td> {{ credito.fecha}}</td>
+              </tr>
+              <tr>
+                <td>Valor venta:</td>
+                <td>{{ credito.credito_total }}</td>
+              </tr>
+              <tr>
+                <td>Estado:</td>
+                <td>{{ credito.estado}}</td>
+              </tr>
+              <tr>
+                <td>Valor cuota:</td>
+                <td>{{ credito.credito_restante }}</td>
+              </tr>
+              <tr>
+                <td><ion-button (click)="openDetalleClienteModal(credito)">Ver Detalles</ion-button></td>
+              </tr>
+            </div>
+          </ion-accordion>
+        </div>
+      </ion-accordion-group>
+    </div>
+    </tbody>
+
+    <div *ngIf="showNoResultsMessage && !searching" class="ion-text-center ion-padding">
+      No se encontraron productos con ese nombre.
+    </div>
+    
+  </table>
+  <div *ngIf="errorBusqueda" class="ion-text-center ion-padding">
+    Se produjo un error al buscar productos. Por favor, inténtalo de nuevo.
+  </div>
+
+  
+
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "softgi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

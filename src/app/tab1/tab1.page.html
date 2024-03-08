@@ -1,0 +1,84 @@
+<ion-toolbar>
+  <ion-title>
+    Productos
+  </ion-title>
+</ion-toolbar>
+
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-spinner *ngIf="searching" class="center-spinner"></ion-spinner>
+  <ion-searchbar
+  [debounce]="700"
+  placeholder="Productos"
+  class="icono_buscador custom-searchbar"
+  [(ngModel)]="searchTerm"
+  (ionInput)="filterProductos($event)"
+></ion-searchbar>
+ 
+  <table class="font">
+    <thead>
+      
+      <tr>
+        <ion-toolbar>
+        <th>Nombre</th>
+        <th>Cantidad </th>
+      </ion-toolbar>
+      </tr>
+      
+    </thead>
+    <tbody>
+      
+      <div class="table-wrapper">
+      <ion-accordion-group expand="inset">
+        
+        <div *ngFor="let producto of filteredProductos">
+          <ion-accordion [value]="producto.id_producto">
+            <ion-item slot="header" color="light" >
+              
+              <tr class="input-wrapper">
+                <td class="fa">{{ producto.nombre_producto.length > 15 ? producto.nombre_producto.slice(0, 15) + '...' : producto.nombre_producto }}</td>
+                <td class="nom">{{ producto.cantidad_producto }}</td>
+              </tr>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <tr>
+                <td>Referencia:</td>
+                <td>{{ producto.ref_produ_1 }}</td>
+              </tr>
+              <tr>
+                <td>Precio Compra: </td>
+                <td> {{ producto.precio_compra }}</td>
+              </tr>
+              <tr>
+                <td>Precio Venta:</td>
+                <td>{{ producto.precio_venta }}</td>
+              </tr>
+              <tr>
+                <td>Stock minimo:</td>
+                <td>{{ producto.stockminimoa }}</td>
+              </tr>
+              <tr>
+                <td>Provedor:</td>
+                <td>{{ producto.nom_proveedor }}</td>
+              </tr>
+            </div>
+          </ion-accordion>
+        </div>
+      </ion-accordion-group>
+    </div>
+    </tbody>
+
+    <div *ngIf="showNoResultsMessage && !searching" class="ion-text-center ion-padding">
+      No se encontraron productos con ese nombre.
+    </div>
+    
+  </table>
+  <div *ngIf="errorBusqueda" class="ion-text-center ion-padding">
+    Se produjo un error al buscar productos. Por favor, inténtalo de nuevo.
+  </div>
+
+</ion-content>
+

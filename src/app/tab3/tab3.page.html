@@ -1,0 +1,73 @@
+
+  <ion-toolbar>
+    <ion-title>
+      Estadisticas
+    </ion-title>
+  </ion-toolbar>
+
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div style="max-width: 200px; margin: 3px auto; border: 2px solid #3498db; padding: 8px; border-radius: 10px; background-color: #ecf0f1; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                <p style="margin: 0; text-align: center;">Mes actual: {{ mesActual }}</p>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div style="max-width: 200px; margin: 3px auto; border: 2px solid #3498db; padding: 8px; border-radius: 10px; background-color: #ecf0f1; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                <p style="margin: 0; text-align: center; color: black;" (click)="setOpen(true)">Ventas por mes</p>
+              </div>
+              
+            </ion-col>
+        </ion-row>
+          </ion-grid>
+
+
+
+        <ion-card>
+          <canvas  id="myChart" width="400" height="400"></canvas>
+        </ion-card>
+
+  
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let ingreso of ingresosDiarios; let i = index">
+              <app-day-box [day]="ingreso.day" [value]="ingreso.value" [backgroundColor]="getBackgroundColor(i)"></app-day-box>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      
+
+
+    
+      <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-toolbar>
+            <ion-title>Ventas de mes total</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+          <ion-content class="ion-padding">
+            <ion-content>
+                  <ion-row>
+                    <ion-col style="border: 1px solid #e7ebee;" size="6" size-md="4" *ngFor="let venta of ventasPorMes">
+                        <ion-card-header>
+                          <ion-card-title>{{ venta.mes }}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                          Total: {{ venta.totalFormateado }}
+                        </ion-card-content>
+                    </ion-col>
+                  </ion-row>
+            </ion-content>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+</ion-content>
