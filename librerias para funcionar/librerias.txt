@@ -1,0 +1,8 @@
+Graficos si no  funciona las instalaciones de charts normal
+npm install ng2-charts@next --save
+npm install --save-dev @types/chart.js
+npm install -D @types/chart.js
+
+Lo que se tiene que instalar 
+npm install --save chart.js
+npm install --save ng2-charts
