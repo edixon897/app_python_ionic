@@ -8,3 +8,32 @@
     margin: 0 auto;
   }
   
+.mes_actual{
+  margin: 0; 
+  text-align: center; 
+  font-size: 1.2em;
+  padding: 8px;
+}
+  .mes_actual p{
+    margin: 0;
+  }
+
+.btn_venta_mes{
+  max-width: 200px; 
+  margin: 3px auto; 
+  border: 1px solid #ccc; 
+  padding: 8px; 
+  border-radius: 10px; 
+  background-color: #eee; 
+  margin: 0; 
+  text-align: center;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+  
+}
+  
+  .btn_venta_mes p{
+    color: #358bc4;
+    font-size: 1em;
+    margin: 1px;
+  }
+  
