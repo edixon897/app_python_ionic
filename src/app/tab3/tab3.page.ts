@@ -18,7 +18,7 @@ ventas!: any[];
 datasetColors: string | ((ctx: ScriptableContext<"bar">, options: AnyObject) => Color | undefined) | _DeepPartialObject<CanvasGradient> | _DeepPartialObject<CanvasPattern> | readonly (string | _DeepPartialObject<CanvasGradient> | _DeepPartialObject<CanvasPattern> | undefined)[] | undefined;
 ingresosDiarios: {day: string, value: number }[] = [];
 ventasPorMes: { mes: string; total: number; totalFormateado: string }[] = [];
-days: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+days: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 isModalOpen = false;
 public mesActual: string | undefined;
   alertController: any;
@@ -208,12 +208,12 @@ generarGrafico() {
 
   if (ctx) {
     const datasetColors = [
-      'rgba(2, 70, 105, 10)',
-      'rgba(3, 90, 143, 10)',
-      'rgba(39, 135, 183, 10)',
-      'rgba(104, 179, 218, 10)',
-      'rgba(174, 211, 229, 10)',
-      'rgba(219, 234, 241, 10)'
+      'rgba(53, 140, 180, 71)',
+      'rgba(53, 140, 180, 71)',
+      'rgba(53, 140, 180, 71)',
+      'rgba(53, 140, 180, 71)',
+      'rgba(53, 140, 180, 71)',
+      'rgba(53, 140, 180, 71)'
     ];
 
     const porcentajesVentas = this.calcularPorcentajeVentas();
@@ -254,12 +254,12 @@ generarGrafico() {
 
     getBackgroundColor(index: number): string {
       const datasetColors = [
-        'rgba(2, 70, 105, 10)',
-        'rgba(3, 90, 143, 10)',
-        'rgba(39, 135, 183, 10)',
-        'rgba(104, 179, 218, 10)',
-        'rgba(174, 211, 229, 10)',
-        'rgba(219, 234, 241, 10)'
+        'rgba(227, 227, 227, 71)',
+        'rgba(227, 227, 227, 71)',
+        'rgba(227, 227, 227, 71)',
+        'rgba(227, 227, 227, 71)',
+        'rgba(227, 227, 227, 71)',
+        'rgba(227, 227, 227, 71)'
       ];
 
       return datasetColors[index];

@@ -1,7 +1,7 @@
 
   <ion-toolbar>
     <ion-title>
-      Estadisticas
+      Estadísticas
     </ion-title>
   </ion-toolbar>
 
@@ -14,13 +14,13 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <div style="max-width: 200px; margin: 3px auto; border: 2px solid #3498db; padding: 8px; border-radius: 10px; background-color: #ecf0f1; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
-                <p style="margin: 0; text-align: center;">Mes actual: {{ mesActual }}</p>
+              <div class="mes_actual">
+                <p>Mes actual: {{ mesActual }}</p>
               </div>
             </ion-col>
             <ion-col>
-              <div style="max-width: 200px; margin: 3px auto; border: 2px solid #3498db; padding: 8px; border-radius: 10px; background-color: #ecf0f1; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
-                <p style="margin: 0; text-align: center; color: black;" (click)="setOpen(true)">Ventas por mes</p>
+              <div class="btn_venta_mes">
+                <p (click)="setOpen(true)">Ventas por mes</p>
               </div>
               
             </ion-col>
@@ -51,7 +51,7 @@
           <ion-toolbar>
             <ion-title>Ventas de mes total</ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+              <ion-button (click)="setOpen(false)"><ion-icon id="btn_cerrar" name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
           </ion-toolbar>
           <ion-content class="ion-padding">

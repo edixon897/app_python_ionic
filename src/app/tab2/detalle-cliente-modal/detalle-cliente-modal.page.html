@@ -10,13 +10,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      Información del Cliente
-    </ion-card-header>
-    
+  <ion-card>    
     <ion-card-content>
-      <ion-label>Nombre: {{ detallesCliente.nombre_completo }}</ion-label>
+      <ion-label class="info_detalle">Nombre: {{ detallesCliente.nombre_completo }}</ion-label>
+      <ion-label class="info_detalle">Celular: {{ detallesCliente.contacto_cliente }}</ion-label>
+      <ion-label class="info_detalle">Correo electrónico: {{ detallesCliente.email_cliente }}</ion-label>
+      <ion-label class="info_detalle">Ciudad: {{ detallesCliente.ciudad_cliente }} </ion-label>
+      <ion-label class="info_detalle">Dirección: {{ detallesCliente.direccion_cliente }}</ion-label>
       <!-- Agrega más detalles según sea necesario -->
     </ion-card-content>
   </ion-card>
