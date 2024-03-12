@@ -18,7 +18,7 @@ export class Tab1Page {
 
   constructor(private conexionService: ConexionService) {}
 
-  ngOnInit() {
+  ngOnInit () {
     this.loadProductos();
   }
 
