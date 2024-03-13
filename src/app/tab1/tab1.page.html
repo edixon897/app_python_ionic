@@ -32,14 +32,14 @@
     <tbody>
       
       <div class="table-wrapper">
-      <ion-accordion-group expand="inset">
+      <ion-accordion-group expand="inset" >
         
-        <div *ngFor="let producto of filteredProductos">
-          <ion-accordion [value]="producto.id_producto">
-            <ion-item slot="header" color="light" >
+        <div *ngFor="let producto of filteredProductos" >
+          <ion-accordion [value]="producto.id_producto" class="color_icono">
+            <ion-item slot="header" color="light">
               
-              <tr class="input-wrapper">
-                <td class="fa">{{ producto.nombre_producto.length > 15 ? producto.nombre_producto.slice(0, 15) + '...' : producto.nombre_producto }}</td>
+              <tr class="input-wrapper" >
+                <td class="fa" class="color_nombre">{{ producto.nombre_producto.length > 15 ? producto.nombre_producto.slice(0, 15) + '...' : producto.nombre_producto }}</td>
                 <td class="nom">{{ producto.cantidad_producto }}</td>
               </tr>
             </ion-item>

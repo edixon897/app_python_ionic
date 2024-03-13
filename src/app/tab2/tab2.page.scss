@@ -35,14 +35,14 @@ th, td {
 
 th {
     background-color: #ffffff;
-    color: #358cb4;
+    color: #585858;
     align-items: center;
     width: 50%;
 }
 
 
 td{
-    padding: 1.2em 0;
+    padding: 1em 0;
 }
 
 tr{
@@ -51,7 +51,7 @@ tr{
 
 ion-accordion-group .ion-padding tr {
     display: flex; 
-    justify-content: space-between; 
+    justify-content: center; 
     border-bottom: 1px solid #ddd; 
     padding: 0px; 
     margin: 0;
@@ -169,4 +169,18 @@ ion-spinner.center-spinner {
     transform: translate(-50%, -50%);
     z-index: 999; /* Ajusta según sea necesario */
 }
+
+/* Color azul para el nombre del producto */
+.color_nombre{
+    display: block;
+    height: 100%;
+    width: 100%;
+    border: none;
+  }
+
+.btn_detalle{
+    background-color: #358cb4;
+
+}
+  
 
