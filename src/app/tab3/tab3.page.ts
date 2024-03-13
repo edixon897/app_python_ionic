@@ -53,7 +53,7 @@ public mesActual: string | undefined;
               // Mostrar alerta con el mensaje de error
               const alertOptions: AlertOptions = {
                 header: 'Error',
-                message: 'Sin conexion ha internet, intenta de nuevamente',
+                message: 'Sin conexion ha internet, intenta nuevamente.',
                 buttons: ['OK'],
               };
             

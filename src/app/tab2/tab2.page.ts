@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
 import { DetalleClienteModalPage } from './detalle-cliente-modal/detalle-cliente-modal.page';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, AlertOptions, ModalController } from '@ionic/angular';
 
 
 
@@ -40,9 +40,18 @@ export class Tab2Page {
         this.creditos = data;
         this.filteredCreditos = data;
       },
-      (error) => {
-        console.error('Error en la búsqueda:', error);
-        this.errorBusqueda = true;
+      async (error) => {
+        console.error('Error al obtener datos de ventas:', error);
+
+        // Mostrar alerta con el mensaje de error
+        const alertOptions: AlertOptions = {
+          header: 'Error',
+          message: 'Sin conexion ha internet, intenta nuevamente',
+          buttons: ['OK'],
+        };
+      
+        const alert = await this.alertController.create(alertOptions);
+        await alert.present();
       }
     )
   };
@@ -60,7 +69,7 @@ export class Tab2Page {
         console.error('Error al obtener los créditos:', error);
         const alert = await this.alertController.create({
           header: 'Error',
-          message: 'Ha ocurrido un error al intentar obtener la infomacion. Por favor, revisa tu conexión a internet e intenta nuevamente.',
+          message: 'Sin conexion ha internet, intenta nuevamente.',
           buttons: ['OK']
         });
         await alert.present();

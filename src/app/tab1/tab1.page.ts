@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, AlertOptions } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -19,7 +19,8 @@ export class Tab1Page {
 
 
   constructor(private conexionService: ConexionService,
-              private alertController: AlertController) {}
+              private alertController: AlertController,
+              private alertCtrl: AlertController) {}
 
   ngOnInit () {
     this.loadProductos();
@@ -31,9 +32,18 @@ export class Tab1Page {
         this.productos = data
         this.filteredProductos = data;
       },
-      (error) => {
-        console.error('Error en la búsqueda:', error);
-        this.errorBusqueda = true;  // Activa el indicador de error
+      async (error) => {
+        console.error('Error al obtener datos de ventas:', error);
+
+        // Mostrar alerta con el mensaje de error
+        const alertOptions: AlertOptions = {
+          header: 'Error',
+          message: 'Sin conexion ha internet, intenta nuevamente',
+          buttons: ['OK'],
+        };
+      
+        const alert = await this.alertController.create(alertOptions);
+        await alert.present();
       }
     )
   }
@@ -49,7 +59,7 @@ export class Tab1Page {
         console.error('Error al obtener los créditos:', error);
         const alert = await this.alertController.create({
           header: 'Error',
-          message: 'Ha ocurrido un error al intentar obtener la infomacion. Por favor, revisa tu conexión a internet e intenta nuevamente.',
+          message: 'Sin conexion ha internet, intenta nuevamente.',
           buttons: ['OK']
         });
         await alert.present();
