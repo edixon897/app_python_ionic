@@ -33,7 +33,7 @@ th, td {
 
 th {
   background-color: #fff;
-  color: #358cb4;
+  color: #585858;
   align-items: center;
   width: 50%;
 }
@@ -167,3 +167,14 @@ ion-spinner.center-spinner {
   z-index: 999; /* Ajusta según sea necesario */
 }
 
+:host .ionicon{
+  color: #358cb4;
+}
+
+/* Color azul para el nombre del producto */
+.color_nombre{
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: none;
+}

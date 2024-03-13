@@ -34,7 +34,7 @@
             <ion-item slot="header" color="light" >
               
               <tr class="input-wrapper">
-                <td class="fa">{{ credito.contador}}</td>
+                <td class="fa" class="color_nombre">{{ credito.contador}}</td>
                 <td class="nom">{{ credito.productos.length > 15 ? credito.productos.slice(0, 15) + '...' : credito.productos }}</td>
               </tr>
             </ion-item>
@@ -60,8 +60,7 @@
                 <td>{{ credito.credito_restante }}</td>
               </tr>
               <tr>
-                <td><ion-button (click)="openDetalleClienteModal(credito)">Ver Detalles</ion-button></td>
-              </tr>
+                <td><ion-button (click)="openDetalleClienteModal(credito)" class="btn_detalle">Ver Detalles</ion-button></td>
             </div>
           </ion-accordion>
         </div>
