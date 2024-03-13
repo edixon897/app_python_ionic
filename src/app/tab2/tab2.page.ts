@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
 import { DetalleClienteModalPage } from './detalle-cliente-modal/detalle-cliente-modal.page';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 
 
@@ -20,12 +20,15 @@ export class Tab2Page {
   searching: boolean = false;
   errorBusqueda: boolean = false;
   showNoResultsMessage: boolean | undefined;
+  errorObtenerCreditos: boolean = false;
+ 
 
 
 
 
   constructor( private conexionService: ConexionService,
-                private modalController: ModalController) {}
+                private modalController: ModalController,
+                private alertController: AlertController) {}
 
   ngOnInit() {
     this.loadCreditos();
@@ -39,22 +42,34 @@ export class Tab2Page {
       },
       (error) => {
         console.error('Error en la búsqueda:', error);
-        this.errorBusqueda = true;  // Activa el indicador de error
+        this.errorBusqueda = true;
       }
     )
   };
-
-  doRefresh(event: any){
+  
+  async doRefresh(event: any) {
     this.conexionService.getCreditos().subscribe(
       response => {
-        this.creditos = response
+        // En caso de éxito, actualiza los créditos y completa el evento de refresco
+        this.creditos = response;
         this.filteredCreditos = response;
         event.target.complete();
+      },
+      async error => {
+        // En caso de error, muestra el alerta de error y completa el evento de refresco
+        console.error('Error al obtener los créditos:', error);
+        const alert = await this.alertController.create({
+          header: 'Error',
+          message: 'Ha ocurrido un error al intentar obtener la infomacion. Por favor, revisa tu conexión a internet e intenta nuevamente.',
+          buttons: ['OK']
+        });
+        await alert.present();
+        event.target.complete(); // Asegúrate de completar el evento de refresco aquí también
       }
-    )
+    );
   }
 
-   // En tu componente TypeScript
+   
 async filterCreditos(event: any) {
   this.searchTerm = event.target.value;
   this.searching = true;

@@ -68,15 +68,17 @@
       </ion-accordion-group>
     </div>
     </tbody>
+    <div *ngIf="errorObtenerCreditos" class="error-message">
+      Ha ocurrido un error al obtener los créditos. Por favor, revisa tu conexión a internet e intenta nuevamente.
+    </div>
+
+    
 
     <div *ngIf="showNoResultsMessage && !searching" class="ion-text-center ion-padding">
       No se encontraron productos con ese nombre.
     </div>
     
   </table>
-  <div *ngIf="errorBusqueda" class="ion-text-center ion-padding">
-    Se produjo un error al buscar productos. Por favor, inténtalo de nuevo.
-  </div>
 
   
 

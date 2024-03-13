@@ -43,13 +43,6 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
-        <div *ngIf="!ventas || ventas.length === 0">
-          <p>No hay datos de ventas disponibles</p>
-        </div>
-      
-
-
     
       <ion-modal [isOpen]="isModalOpen">
         <ng-template>
@@ -95,7 +88,7 @@
               </ion-col>
             </ion-row>
           </ion-list>
-            <!-- Manejar el caso en que no haya datos -->
+            
             <div *ngIf="!ventas || ventas.length === 0">
               <p>No hay datos de ventas disponibles.</p>
             </div>

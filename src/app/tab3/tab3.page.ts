@@ -22,7 +22,7 @@ days: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado
 isModalOpen = false;
 isModalOpenTop = false;
 public mesActual: string | undefined;
-alertController: any;
+
   
   constructor(
     public modalController: ModalController,
@@ -30,7 +30,7 @@ alertController: any;
     private conexion: ConexionService,
     private alertCtrl: AlertController,
     private ToastController: ToastController,
-    private modalCtrl: ModalController
+    private alertController: AlertController
   ) {}
   
       ngOnInit(): void {
@@ -53,8 +53,7 @@ alertController: any;
               // Mostrar alerta con el mensaje de error
               const alertOptions: AlertOptions = {
                 header: 'Error',
-                subHeader: 'Error al obtener datos de ventas',
-                message: 'Hubo un problema al cargar los datos de ventas. Por favor, inténtalo de nuevo.',
+                message: 'Sin conexion ha internet, intenta de nuevamente',
                 buttons: ['OK'],
               };
             
@@ -68,25 +67,31 @@ alertController: any;
 
 
     /* REFERESCA LA PAGINA */
-    doRefresh(event: any) {
+    async doRefresh(event: any) {
       combineLatest([
         this.conexion.getVentasSemanales(),
-        // Otros observables que puedas necesitar
-      ]).subscribe(
-        ([ventasResponse, /* Otros resultados */]) => {
-          this.ventas = ventasResponse;
-          this.ventasPorMes = this.calcularVentasPorMes(ventasResponse);
-          this.generarGrafico();
-          this.calculateDailyIncome();
-          this.obtenerMesActual();
-          this.calcularTopProductos();
-          event.target.complete();
-        },
-        (error) => {
-          console.error('Error en la actualización:', error);
-          event.target.complete();
-        }
-      );
+          ]).subscribe(
+            ([ventasResponse, /* Otros resultados */]) => {
+              this.ventas = ventasResponse;
+              this.ventasPorMes = this.calcularVentasPorMes(ventasResponse);
+              this.generarGrafico();
+              this.calculateDailyIncome();
+              this.obtenerMesActual();
+              this.calcularTopProductos();
+              event.target.complete();
+            },
+            async error => {
+              // En caso de error, muestra el alerta de error y completa el evento de refresco
+              console.error('Error al obtener los créditos:', error);
+              const alert = await this.alertController.create({
+                header: 'Error',
+                message: 'Sin conexion ha internet, intenta de nuevamente',
+                buttons: ['OK']
+              });
+              await alert.present();
+              event.target.complete(); // Asegúrate de completar el evento de refresco aquí también
+            }
+          );
     }
 
           /* OBTENER DATOS CALCULADOS DE INGRESOS DIARIOS */
