@@ -85,7 +85,7 @@ public mesActual: string | undefined;
               console.error('Error al obtener los créditos:', error);
               const alert = await this.alertController.create({
                 header: 'Error',
-                message: 'Sin conexion ha internet, intenta de nuevamente',
+                message: 'Sin conexion a la base de datos, intenta de nuevamente',
                 buttons: ['OK']
               });
               await alert.present();
