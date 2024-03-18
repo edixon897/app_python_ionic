@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
 import { AlertController, AlertOptions } from '@ionic/angular';
+import { ModalProoPage } from './modal-proo/modal-proo.page';
+import { ModalController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-tab1',
@@ -16,11 +19,13 @@ export class Tab1Page {
   errorBusqueda: boolean = false;
   showNoResultsMessage: boolean | undefined;
   errorObtenerCreditos: boolean = false;
+  
 
 
   constructor(private conexionService: ConexionService,
               private alertController: AlertController,
-              private alertCtrl: AlertController) {}
+              private alertCtrl: AlertController,
+              private modalcontroller:ModalController) {}
 
   ngOnInit () {
     this.loadProductos();
@@ -90,4 +95,18 @@ export class Tab1Page {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
 
+    
+
+    
+      async openModal() {
+        const modal = await this.modalcontroller.create({
+          component: ModalProoPage,
+          componentProps: {
+            // Puedes pasar datos al modal utilizando componentProps
+            // Ejemplo: data: tuData
+          },
+        });
+        return await modal.present();
+      }
     }
+          
