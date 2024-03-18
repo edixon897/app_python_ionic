@@ -69,7 +69,7 @@ export class Tab2Page {
         console.error('Error al obtener los créditos:', error);
         const alert = await this.alertController.create({
           header: 'Error',
-          message: 'Sin conexion ha internet, intenta nuevamente.',
+          message: 'Sin conexion a la base de datos, intenta nuevamente.',
           buttons: ['OK']
         });
         await alert.present();
