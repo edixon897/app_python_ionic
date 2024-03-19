@@ -1,6 +1,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Lato:wght@400;700&display=swap');
 
+* {
+  transition: all 0.3s ease-in-out;
+}
+
 ion-toolbar {
   text-align: center;
 }
@@ -24,6 +28,7 @@ table {
   margin-top: 20px; 
   padding: 0.5em;
   font-family: 'Barlow', sans-serif;
+  position: relative;
 }
 th, td {
   border: 1px solid #ddd;
@@ -180,8 +185,12 @@ ion-spinner.center-spinner {
 }
 
 
-/* -----modal---------- */
 
+
+
+
+
+/* Modal de detalles de proveedores */
 
 div#fondo_modal {
   position: absolute;
