@@ -78,20 +78,7 @@
             </ion-buttons>
           </ion-toolbar>
           <ion-content class="ion-padding">
-            <ion-list *ngIf="topProductos && topProductos.length > 0">
-              <ion-row>
-                <ion-col>
-                  <ion-item *ngFor="let producto of topProductos">
-                    <ion-label>{{ producto.producto_factura.length > 10 ? producto.producto_factura.slice(0, 20) + '..' : producto.producto_facturas }}</ion-label>
-                    <ion-label>Cantidad vendida: {{ producto.cantidad_productos_factura }}</ion-label>
-                  </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-list>
             
-            <div *ngIf="!ventas || ventas.length === 0">
-              <p>No hay datos de ventas disponibles.</p>
-            </div>
             
           </ion-content>
         </ng-template>

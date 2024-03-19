@@ -34,7 +34,6 @@ public mesActual: string | undefined;
   ) {}
   
       ngOnInit(): void {
-      /*const fechaActual = new Date().toISOString().split('T')[0]; */
         this.conexion.getVentasSemanales().subscribe(
             (data) => {
                 this.ventas = data;
@@ -272,12 +271,12 @@ public mesActual: string | undefined;
 
     getBackgroundColor(index: number): string {
       const datasetColors = [
-        'rgba(227, 227, 227, 71)',
-        'rgba(227, 227, 227, 71)',
-        'rgba(227, 227, 227, 71)',
-        'rgba(227, 227, 227, 71)',
-        'rgba(227, 227, 227, 71)',
-        'rgba(227, 227, 227, 71)'
+        'rgba()',
+        'rgba()',
+        'rgba()',
+        'rgba()',
+        'rgba()',
+        'rgba()'
       ];
 
       return datasetColors[index];
@@ -376,3 +375,8 @@ public mesActual: string | undefined;
         
     
 }
+
+
+
+
+
