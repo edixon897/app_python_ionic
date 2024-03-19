@@ -144,4 +144,30 @@ $app->get('/creditos', function($request, $response, $args) {
     ->write(json_encode($test));
 });
 
+
+// muestra la info del proveedor
+$app->get('/getProveedor/{nom_proveedor}', function (Request $request, Response $response, $args) {
+    try {
+        // Obtén la instancia de la base de datos
+        $db = getDB();
+
+        // Prepara la consulta SQL
+        $stmt = $db->prepare("SELECT doc_proveedor, nom_proveedor, contacto_proveedor, email_proveedor, direccion_proveedor, ciudad_proveedor, estado_proveedor FROM proveedores WHERE nom_proveedor = :nom_proveedor limit 1");
+        $stmt->bindParam(':nom_proveedor', $args['nom_proveedor']);
+        $stmt->execute();
+        
+        // Obtiene el resultado de la consulta
+        $proveedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Devuelve el resultado de la consulta como JSON
+        $response->getBody()->write(json_encode($proveedores));
+
+    } catch (PDOException $e) {
+        // Error en la consulta
+        $response->getBody()->write(json_encode(['resp' => 'error', 'mensaje' => $e->getMessage()]));
+    }
+
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
 $app->run();

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
 import { AlertController, AlertOptions } from '@ionic/angular';
+import { ModalProoPage } from './modal-proo/modal-proo.page';
+import { ModalController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-tab1',
@@ -11,16 +14,19 @@ export class Tab1Page {
 
   searchTerm: string = '';
   productos: any[] = [];
+  proveedores: any[] = [];
   filteredProductos: any[] = [];
   searching: boolean = false;
   errorBusqueda: boolean = false;
   showNoResultsMessage: boolean | undefined;
   errorObtenerCreditos: boolean = false;
+  
 
 
   constructor(private conexionService: ConexionService,
               private alertController: AlertController,
-              private alertCtrl: AlertController) {}
+              private alertCtrl: AlertController,
+              private modalcontroller:ModalController) {}
 
   ngOnInit () {
     this.loadProductos();
@@ -59,7 +65,7 @@ export class Tab1Page {
         console.error('Error al obtener los créditos:', error);
         const alert = await this.alertController.create({
           header: 'Error',
-          message: 'Sin conexion ha internet, intenta nuevamente.',
+          message: 'Sin conexion a la base de datos, intenta nuevamente.',
           buttons: ['OK']
         });
         await alert.present();
@@ -90,4 +96,88 @@ export class Tab1Page {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
 
+    
+
+      obtenerProveedor(nomProveedor: string): void {
+        this.conexionService.getProveedor(nomProveedor).subscribe(
+          (data) => {
+            console.log('Información del proveedor:', data);
+            // Agregar la información del proveedor al array de proveedores
+            /* this.proveedores.push(data); */
+            this.proveedores = data;
+            
+            
+            let fondo_modal = document.getElementById('fondo_modal');
+            let modal = document.getElementById('modal_contenedor');
+            if (fondo_modal && modal) {
+              fondo_modal.style.display = "block";
+    
+              setTimeout( function() {
+                if (fondo_modal) {
+                  fondo_modal.style.backgroundColor = "#58585890"
+                }
+              },200)
+    
+              modal.style.display = "block"
+              setTimeout( function() {
+                if (modal) {
+                  modal.style.opacity = "1"
+                }
+              },400)
+              
+            }
+            
+          },
+          (error) => {
+            console.error('Error al obtener información del proveedor:', error);
+          }
+        );
+      }
+    
+    
+      cerrar_modal() {
+        let fondo_modal = document.getElementById('fondo_modal');
+        let modal = document.getElementById('modal_contenedor');
+        if (fondo_modal && modal) {
+    
+    
+          
+          setTimeout( function() {
+            if (modal) {
+              modal.style.opacity = "0"
+            }
+          },200)
+    
+          setTimeout( function() {
+            if (modal) {
+              modal.style.display = "none"
+            }
+          },380)
+          
+          setTimeout( function() {
+            if (fondo_modal) {
+              fondo_modal.style.backgroundColor = "#58585800"
+            }
+          },400)
+    
+          setTimeout( function() {
+            if (fondo_modal) {
+              fondo_modal.style.display = "none";
+            }
+          },580)
+    
+          
+        }
+      }
+    
+    
+    
+    
+      detener_Propagacion(event: Event) {
+        event.stopPropagation();
     }
+
+
+    
+    }
+          

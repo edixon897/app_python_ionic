@@ -6,7 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
+  },  {
+    path: 'modal-proo',
+    loadChildren: () => import('./modal-proo/modal-proo.module').then( m => m.ModalProoPageModule)
   }
+
 ];
 
 @NgModule({
