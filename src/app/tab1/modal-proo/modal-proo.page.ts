@@ -23,40 +23,8 @@ export class ModalProoPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.visualizaDatos()
+    
   }
-
-  
-  visualizaDatos(){
-    this.conexion.getproveedores().subscribe(
-      data => {
-        this.proveedores = data
-        this.filteredProductos = data;
-      }
-    )
-     }
-
-  cerrarModal() {
-    this.modalcontroller.dismiss();
-  }
-
-  async filterProductos(event: any) {
-    this.searchTerm = event.target.value;
-    this.searching = true;
-    this.showNoResultsMessage = false;
-
-
-    await this.delay(1000);
-
-    this.filteredProductos = this.proveedores.filter((p) =>
-    p.nom_proveedor.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-
-    this.searching = false;
-    this.showNoResultsMessage = this.filteredProductos.length === 0;
-  }
-  async delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  
 }
+  
+  

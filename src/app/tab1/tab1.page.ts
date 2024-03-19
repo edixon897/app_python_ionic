@@ -14,6 +14,7 @@ export class Tab1Page {
 
   searchTerm: string = '';
   productos: any[] = [];
+  proveedores: any[] = [];
   filteredProductos: any[] = [];
   searching: boolean = false;
   errorBusqueda: boolean = false;
@@ -97,16 +98,86 @@ export class Tab1Page {
 
     
 
+      obtenerProveedor(nomProveedor: string): void {
+        this.conexionService.getProveedor(nomProveedor).subscribe(
+          (data) => {
+            console.log('Información del proveedor:', data);
+            // Agregar la información del proveedor al array de proveedores
+            /* this.proveedores.push(data); */
+            this.proveedores = data;
+            
+            
+            let fondo_modal = document.getElementById('fondo_modal');
+            let modal = document.getElementById('modal_contenedor');
+            if (fondo_modal && modal) {
+              fondo_modal.style.display = "block";
     
-      async openModal() {
-        const modal = await this.modalcontroller.create({
-          component: ModalProoPage,
-          componentProps: {
-            // Puedes pasar datos al modal utilizando componentProps
-            // Ejemplo: data: tuData
+              setTimeout( function() {
+                if (fondo_modal) {
+                  fondo_modal.style.backgroundColor = "#58585890"
+                }
+              },200)
+    
+              modal.style.display = "block"
+              setTimeout( function() {
+                if (modal) {
+                  modal.style.opacity = "1"
+                }
+              },400)
+              
+            }
+            
           },
-        });
-        return await modal.present();
+          (error) => {
+            console.error('Error al obtener información del proveedor:', error);
+          }
+        );
       }
+    
+    
+      cerrar_modal() {
+        let fondo_modal = document.getElementById('fondo_modal');
+        let modal = document.getElementById('modal_contenedor');
+        if (fondo_modal && modal) {
+    
+    
+          
+          setTimeout( function() {
+            if (modal) {
+              modal.style.opacity = "0"
+            }
+          },200)
+    
+          setTimeout( function() {
+            if (modal) {
+              modal.style.display = "none"
+            }
+          },380)
+          
+          setTimeout( function() {
+            if (fondo_modal) {
+              fondo_modal.style.backgroundColor = "#58585800"
+            }
+          },400)
+    
+          setTimeout( function() {
+            if (fondo_modal) {
+              fondo_modal.style.display = "none";
+            }
+          },580)
+    
+          
+        }
+      }
+    
+    
+    
+    
+      detener_Propagacion(event: Event) {
+        event.stopPropagation();
+    }
+
+
+    
     }
           

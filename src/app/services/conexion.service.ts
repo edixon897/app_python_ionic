@@ -44,10 +44,9 @@ export class ConexionService {
     );
   }
 
-  getproveedores(): Observable<any> {
-    return this.http.get(this.baseUrl + '/proveedor').pipe(
-      tap(() => this._refresh$.next())
-    );
+  // Nuevo método para obtener información del proveedor por su nombre
+  getProveedor(nomProveedor: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/getProveedor/${nomProveedor}`);
   }
 }
 
