@@ -29,7 +29,7 @@
             <p>Mes actual: {{ mesActual }}</p>
           </div>
         <ion-card>
-          <canvas  id="myChart" width="400" height="400">x
+          <canvas  id="myChart" width="400" height="400">
           </canvas>
         </ion-card>
 
@@ -52,16 +52,27 @@
           </ion-toolbar>
           <ion-content class="ion-padding">
             <ion-content>
-                  <ion-row>
-                    <ion-col style="border: 1px solid #e7ebee;" size="6" size-md="4" *ngFor="let venta of ventasPorMes">
-                        <ion-card-header>
-                          <ion-card-title>{{ venta.mes }}</ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content>
-                          Total: {{ venta.totalFormateado }}
-                        </ion-card-content>
-                    </ion-col>
-                  </ion-row>
+              <ion-col style="border: 1px solid #e7ebee;" size="6" size-md="4">
+                <ion-card>
+                  <ion-card-title>Seleccionar Mes</ion-card-title>
+                  <select [(ngModel)]="mesSeleccionado" style="margin-left: 10px;">
+                    <option *ngFor="let mes of mesesConVentas" [value]="mes">{{ mes }}</option>
+                  </select>
+                  
+                </ion-card>
+              </ion-col>
+              
+              <ion-col style="border: 1px solid #e7ebee;" size="6" size-md="4" *ngIf="mesSeleccionado">
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-title>{{ mesSeleccionado }}</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    Total: {{ obtenerTotalPorMes(mesSeleccionado) }}
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+              
             </ion-content>
           </ion-content>
         </ng-template>
@@ -70,13 +81,17 @@
       <ion-modal [isOpen]="isModalOpenTop">
         <ng-template>
           <ion-toolbar>
-            <ion-title>Ventas de mes total</ion-title>
+            <ion-title>Top de producto de {{ mesActual }}</ion-title>
             <ion-buttons slot="end">
               <ion-button (click)="setOpenTop(false)"><ion-icon id="btn_cerrar" name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
           </ion-toolbar>
           <ion-content class="ion-padding">
-            
+            <ion-list>
+              <ion-item *ngFor="let producto of topProductos">
+                {{ producto.producto_factura.length > 15 ? producto.producto_factura.slice(0, 15) + '...' : producto.producto_factura  }} - Cantidad vendida: {{ producto.cantidad_productos_factura }}
+              </ion-item>
+            </ion-list>
             
           </ion-content>
         </ng-template>

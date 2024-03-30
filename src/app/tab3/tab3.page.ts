@@ -21,8 +21,9 @@ ventasPorMes: { mes: string; total: number; totalFormateado: string }[] = [];
 days: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 isModalOpen = false;
 isModalOpenTop = false;
-public mesActual: string | undefined;
+mesesConVentas: string[] = [];
 
+public mesActual: string | undefined;
   
   constructor(
     public modalController: ModalController,
@@ -38,11 +39,14 @@ public mesActual: string | undefined;
             (data) => {
                 this.ventas = data;
                 console.log("este es ventas",this.ventas);
-                this.ventasPorMes = this.calcularVentasPorMes(data);
+                /* this.ventasPorMes = this.calcularVentasPorMes(data); */
                 this.generarGrafico();
                 this.calculateDailyIncome();
-                this.obtenerMesActual();
                 this.calcularTopProductos();
+                this.calcularVentasPorMes(this.ventas);
+                this.obtenerMesesConVentas(this.ventas);
+                this. obtenerMesActual();
+                
                 
                 
             },
@@ -70,13 +74,14 @@ public mesActual: string | undefined;
       combineLatest([
         this.conexion.getVentasSemanales(),
           ]).subscribe(
-            ([ventasResponse, /* Otros resultados */]) => {
+            async ([ventasResponse]) => {
               this.ventas = ventasResponse;
-              this.ventasPorMes = this.calcularVentasPorMes(ventasResponse);
+              /* this.ventasPorMes = this.calcularVentasPorMes(ventasResponse); */
               this.generarGrafico();
               this.calculateDailyIncome();
-              this.obtenerMesActual();
               this.calcularTopProductos();
+              this.calcularVentasPorMes(this.ventas);
+              this.obtenerMesesConVentas(this.ventas);
               event.target.complete();
             },
             async error => {
@@ -88,7 +93,7 @@ public mesActual: string | undefined;
                 buttons: ['OK']
               });
               await alert.present();
-              event.target.complete(); // Asegúrate de completar el evento de refresco aquí también
+              event.target.complete(); 
             }
           );
     }
@@ -136,10 +141,10 @@ public mesActual: string | undefined;
         inicioSemana.setHours(0, 0, 0, 0);
         const diaSemana = inicioSemana.getDay();
 
-        // Ajusta para que siempre comience desde el lunes
+        // Ajusto para que siempre comience desde el lunes
         inicioSemana.setDate(inicioSemana.getDate() - diaSemana + (diaSemana === 0 ? -6 : 1));
 
-        // Ajusta para terminar en el domingo
+        // Ajusto para terminar en el domingo
         const finSemana = new Date(inicioSemana);
         finSemana.setDate(inicioSemana.getDate() + 6);
 
@@ -166,6 +171,8 @@ public mesActual: string | undefined;
 
         return porcentajes;
     }
+
+    
 
 
       /* CALCULAR INGRESOS DIARIOS */
@@ -215,11 +222,11 @@ public mesActual: string | undefined;
           const canvas = document.getElementById('myChart') as HTMLCanvasElement | null;
           const ctx = canvas?.getContext('2d');
 
-          // Verifica si ya hay un gráfico existente
+          // Verifico si ya hay un gráfico existente
           const existingChart = ctx ? Chart.getChart(ctx) : null;
 
           if (existingChart) {
-            // Destruye el gráfico existente antes de crear uno nuevo
+            // Destruyo el gráfico existente antes de crear uno nuevo
             existingChart.destroy();
           }
 
@@ -284,8 +291,7 @@ public mesActual: string | undefined;
 
 
 
-    /* CALCULAR  VENTAS MENSAULES */
-    calcularVentasPorMes(ventas: any[]): { mes: string; total: number; totalFormateado: string }[] {
+    calcularVentasPorMes(ventas: any[]): void {
       let ventasPorMes: { [key: string]: number } = {};
       const formatoColombiano = {
         style: 'currency',
@@ -293,7 +299,7 @@ public mesActual: string | undefined;
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       };
-    
+  
       ventas.forEach(venta => {
         const mes = new Date(venta.fecha).toLocaleString('default', { month: 'long', year: 'numeric' });
         if (!ventasPorMes[mes]) {
@@ -301,13 +307,29 @@ public mesActual: string | undefined;
         }
         ventasPorMes[mes] += venta.total;
       });
-    
-      return Object.keys(ventasPorMes).map(mes => ({
+  
+      this.ventasPorMes = Object.keys(ventasPorMes).map(mes => ({
         mes,
         total: ventasPorMes[mes],
         totalFormateado: ventasPorMes[mes].toLocaleString('es-CO', formatoColombiano)
       }));
     }
+  
+    obtenerMesesConVentas(ventas: any[]): void {
+      const mesesSet = new Set<string>();
+      ventas.forEach(venta => {
+        const mes = new Date(venta.fecha).toLocaleString('default', { month: 'long', year: 'numeric' });
+        mesesSet.add(mes);
+      });
+      this.mesesConVentas = Array.from(mesesSet);
+    }
+  
+    obtenerTotalPorMes(mes: string): string {
+      const ventaMes = this.ventasPorMes.find(venta => venta.mes === mes);
+      return ventaMes ? ventaMes.totalFormateado : '0';
+    }
+  
+    mesSeleccionado: string = '';
     
     
 
@@ -335,41 +357,33 @@ public mesActual: string | undefined;
 
 
 
-        /* TOP DE PRODUCTOS */
-        calcularTopProductos() {
-          // Obtener fecha de inicio de la semana actual
-          const fechaActual = new Date();
-          const fechaInicioSemana = new Date(fechaActual);
-          fechaInicioSemana.setDate(fechaInicioSemana.getDate() - fechaInicioSemana.getDay());
-        
-          // Obtener fecha de fin de la semana actual
-          const fechaFinSemana = new Date(fechaInicioSemana);
-          fechaFinSemana.setDate(fechaInicioSemana.getDate() + 6);
-        
-          // Filtrar ventas por la semana actual
-          const ventasSemana = this.ventas.filter(venta =>
-            new Date(venta.fecha) >= fechaInicioSemana && new Date(venta.fecha) <= fechaFinSemana
-          );
-        
-          console.log('Ventas de la semana:', ventasSemana);
-        
-          // Verificar si hay ventas en la semana
-          if (ventasSemana.length > 0) {
-            // Calcular el top 10 de productos dependiendo el producto
-            this.topProductos = this.calcularTop10Productos(ventasSemana);
-            console.log('Top 10 de productos:', this.topProductos);
-          } else {
-            console.log('No hay ventas en la semana.');
-            // Asignar un array vacío a topProductos si no hay ventas
-            this.topProductos = [];
-          }
+     /* TOP DE PRODUCTOS */
+      calcularTopProductos() {
+        // Obtener el mes actual
+        const mesActual = new Date().toLocaleString('default', { month: 'long' });
+
+        // Filtrar las ventas por el mes actual
+        const ventasMes = this.ventas.filter(venta => {
+          const mesVenta = new Date(venta.fecha).toLocaleString('default', { month: 'long' });
+          return mesVenta === mesActual;
+        });
+
+        // Verificar si hay ventas para el mes actual
+        if (ventasMes.length > 0) {
+          
+          this.topProductos = this.calcularTop10Productos(ventasMes);
+          console.log('Top de productos para el mes actual:', this.topProductos);
+        } else {
+          console.log('No hay ventas registradas para el mes actual');
+          this.topProductos = [];
         }
+      }
+
+
 
         /* CALCULO DE TOP DE PRODUCTO */
         calcularTop10Productos(ventasSemana: any[]): any[] {
-          // Ordenar las ventas por cantidad de productos facturados de forma descendente
           ventasSemana.sort((a, b) => b.cantidad_productos_factura - a.cantidad_productos_factura);
-          // Tomar los primeros 10 elementos como el top 10 de productos
           return ventasSemana.slice(0, 10);
         }
         
