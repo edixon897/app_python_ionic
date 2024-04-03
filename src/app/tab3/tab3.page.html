@@ -26,7 +26,7 @@
         </ion-row>
           </ion-grid>
           <div class="mes_actual">
-            <p>Mes actual: {{ mesActual }}</p>
+            <p *ngIf="mesActual">Mes actual: {{ capitalizeFirstLetter(mesActual) }}</p>
           </div>
         <ion-card>
           <canvas  id="myChart" width="400" height="400">
@@ -53,11 +53,16 @@
           <ion-content class="ion-padding">
             <ion-content>
               <ion-col style="border: 1px solid #e7ebee;" size="6" size-md="4">
-                <ion-card>
-                  <ion-card-title>Seleccionar Mes</ion-card-title>
-                  <select [(ngModel)]="mesSeleccionado" style="margin-left: 10px;">
-                    <option *ngFor="let mes of mesesConVentas" [value]="mes">{{ mes }}</option>
-                  </select>
+                <ion-card class="contenedor">
+                  <h5 class="titulo">Selecciona un Mes</h5>
+                  <div class="selecionar">
+                    <div>
+                      <select [(ngModel)]="mesSeleccionado" class="selecionador">
+                        <option value="" disabled selected>Seleccionar mes</option>
+                        <option *ngFor="let mes of mesesConVentas" [value]="mes">{{ capitalizeFirstLetter(mes) }}</option>
+                      </select>
+                    </div>
+                  </div>
                   
                 </ion-card>
               </ion-col>
@@ -65,7 +70,7 @@
               <ion-col style="border: 1px solid #e7ebee;" size="6" size-md="4" *ngIf="mesSeleccionado">
                 <ion-card>
                   <ion-card-header>
-                    <ion-card-title>{{ mesSeleccionado }}</ion-card-title>
+                    <ion-card-title>{{ capitalizeFirstLetter(mesSeleccionado) }}</ion-card-title>
                   </ion-card-header>
                   <ion-card-content>
                     Total: {{ obtenerTotalPorMes(mesSeleccionado) }}
@@ -81,7 +86,7 @@
       <ion-modal [isOpen]="isModalOpenTop">
         <ng-template>
           <ion-toolbar>
-            <ion-title>Top de producto de {{ mesActual }}</ion-title>
+            <ion-title *ngIf="mesActual">Top de producto de {{ capitalizeFirstLetter(mesActual) }}</ion-title>
             <ion-buttons slot="end">
               <ion-button (click)="setOpenTop(false)"><ion-icon id="btn_cerrar" name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
@@ -92,7 +97,7 @@
                 {{ producto.producto_factura.length > 15 ? producto.producto_factura.slice(0, 15) + '...' : producto.producto_factura  }} - Cantidad vendida: {{ producto.cantidad_productos_factura }}
               </ion-item>
             </ion-list>
-            
+            <p *ngIf="topProductos.length === 0">No hay productos en el top.</p>
           </ion-content>
         </ng-template>
       </ion-modal>

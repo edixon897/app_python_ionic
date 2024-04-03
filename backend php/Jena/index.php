@@ -116,7 +116,7 @@ $app->get('/creditos', function($request, $response, $args) {
     try{
         $db = getDb(); // Cargo los datos
         $sth = $db->prepare("SELECT vc.contador, vc.cliente, vc.productos, vc.credito_total, vc.credito_restante, DATE(vc.fecha_venta) as fecha, vc.estado,
-        CONCAT(c.nom_cliente, ' ', c.ape_cliente) as nombre_completo,
+        CONCAT(c.nom_cliente, ' ', c.ape_cliente) as nombre_completo, c.email_cliente, c.contacto_cliente, c.ciudad_cliente, c.direccion_cliente,
         MAX(v.num_factura) as num_factura
         FROM ventas_credito vc
         JOIN clientes c ON vc.cliente = c.doc_cliente
@@ -143,7 +143,6 @@ $app->get('/creditos', function($request, $response, $args) {
     ->withHeader('Content-Type', 'application/json')
     ->write(json_encode($test));
 });
-
 
 // muestra la info del proveedor
 $app->get('/getProveedor/{nom_proveedor}', function (Request $request, Response $response, $args) {
