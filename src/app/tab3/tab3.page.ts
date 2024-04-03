@@ -387,7 +387,11 @@ public mesActual: string | undefined;
           return ventasSemana.slice(0, 10);
         }
         
-    
+  
+        // Función para capitalizar la primera letra
+  capitalizeFirstLetter(word: string): string {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
 }
 
 

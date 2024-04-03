@@ -42,3 +42,17 @@
     margin-right: 8px; /* Espacio entre el icono y el texto */
   }
   
+
+.contenedor{
+  display: flex;
+  align-items: center;
+}
+.selecionador{
+  background-color: #ffffff;
+  border: 1px solid #312e2e;
+  margin-top: 7px;
+}
+.titulo {
+  margin-right: 20px;
+  margin-left: 10px;
+}
