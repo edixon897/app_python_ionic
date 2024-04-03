@@ -86,25 +86,15 @@
   <div id="fondo_modal" (click)="cerrar_modal()">
 
     <div id="modal_contenedor">
-      <ion-item-group style="width: 100%; height: 100%; position: relative;" *ngFor="let proveedor of proveedores">
+      <ion-item-group style="width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center;" *ngFor="let proveedor of proveedores">
 
-        <div id="conten_titulo">
-
-          <section id="lado_logo">
-            <!-- <ion-icon style="color: white; font-size: 5.5em;" name="cube-outline"></ion-icon> -->
-
-            <div id="btn_cerrar" (click)="cerrar_modal()">
-              <ion-icon style="color: #358cb4; font-size: 1.9em;" name="close-outline"></ion-icon>
-            </div>
-
-            <p id="titulo_proveedor">Proveedor</p>
-          </section>
-
-        </div>
 
         <div id="conten_cuerpo" (click)="detener_Propagacion($event)">
 
           <div id="conten_cuerpo_todo">
+            <div id="btn_cerrar" (click)="cerrar_modal()">
+              <ion-icon style="color: #358cb4; font-size: 1.9em;" name="close-outline"></ion-icon>
+            </div>
 
             <section id="contenedor_1_info" >
               <p>{{ proveedor.nom_proveedor }}</p>
