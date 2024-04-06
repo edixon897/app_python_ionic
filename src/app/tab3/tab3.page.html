@@ -91,12 +91,13 @@
               <ion-button (click)="setOpenTop(false)"><ion-icon id="btn_cerrar" name="close-outline"></ion-icon></ion-button>
             </ion-buttons>
           </ion-toolbar>
-          <ion-content class="ion-padding">
-            <ion-list>
-              <ion-item *ngFor="let producto of topProductos">
-                {{ producto.producto_factura.length > 15 ? producto.producto_factura.slice(0, 15) + '...' : producto.producto_factura  }} - Cantidad vendida: {{ producto.cantidad_productos_factura }}
+          <ion-content>
+            <ion-card >
+              <ion-item *ngFor="let producto of topProductos" >
+                <ion-title>{{ producto.producto_factura.length > 25 ? producto.producto_factura.slice(0, 25) + '...' : producto.producto_factura  }} </ion-title>
+                <ion-card-content>Cantida vendida: {{ producto.cantidad_productos_factura }}</ion-card-content>
               </ion-item>
-            </ion-list>
+            </ion-card> 
             <p *ngIf="topProductos.length === 0">No hay productos en el top.</p>
           </ion-content>
         </ng-template>
