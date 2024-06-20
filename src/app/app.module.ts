@@ -7,7 +7,7 @@ import { NgChartsModule } from 'ng2-charts'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http'   //conexion con mi back--end
-import { DetalleClienteModalPage } from './tab2/detalle-cliente-modal/detalle-cliente-modal.page';
+
 
 
 @NgModule({

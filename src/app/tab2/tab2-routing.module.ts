@@ -7,10 +7,6 @@ const routes: Routes = [
     path: '',
     component: Tab2Page,
   },
-  {
-    path: 'detalle-cliente-modal',
-    loadChildren: () => import('./detalle-cliente-modal/detalle-cliente-modal.module').then( m => m.DetalleClienteModalPageModule)
-  }
 ];
 
 @NgModule({

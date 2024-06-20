@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^17.0.2",
     "@angular/platform-browser-dynamic": "^17.0.2",
     "@angular/router": "^17.0.2",
+    "@capacitor/android": "5.7.0",
     "@capacitor/app": "5.0.7",
     "@capacitor/core": "5.7.0",
     "@capacitor/haptics": "5.0.7",
@@ -31,7 +32,9 @@
     "ionicons": "^7.0.0",
     "ng2-charts": "^5.0.4",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.7.5",
     "tslib": "^2.3.0",
+    "undici": "^6.15.0",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
@@ -48,6 +51,7 @@
     "@ionic/angular-toolkit": "^9.0.0",
     "@types/chart.js": "^2.9.41",
     "@types/jasmine": "~5.1.0",
+    "@types/socket.io-client": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^7.26.0",

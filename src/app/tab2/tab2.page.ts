@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,ElementRef, Renderer2  } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
-import { DetalleClienteModalPage } from './detalle-cliente-modal/detalle-cliente-modal.page';
 import { AlertController, AlertOptions, ModalController } from '@ionic/angular';
 
 
@@ -21,6 +20,9 @@ export class Tab2Page {
   errorBusqueda: boolean = false;
   showNoResultsMessage: boolean | undefined;
   errorObtenerCreditos: boolean = false;
+  detallesCliente: any;
+  fondo_modal: boolean = false;
+  ;
  
 
 
@@ -28,7 +30,8 @@ export class Tab2Page {
 
   constructor( private conexionService: ConexionService,
                 private modalController: ModalController,
-                private alertController: AlertController) {}
+                private alertController: AlertController,
+                private elRef: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
     this.loadCreditos();
@@ -101,20 +104,78 @@ async filterCreditos(event: any) {
   }
 
 
-  async openDetalleClienteModal(credito: any) {
-    if (this.modalController) {
-      const modal = await this.modalController.create({
-        component: DetalleClienteModalPage,
-        componentProps: {
-          detallesCliente: credito
-        }
-      });
+
+    
   
-      return await modal.present();
-    } else {
-      console.error('modalController is undefined.');
+  openDetalleClienteModal(credito: any) {
+    this.detallesCliente = credito;
+    this.fondo_modal = true;
+    console.log("Modal abierto. Detalles del cliente:", this.detallesCliente);
+    console.log("fondo_modal:", this.fondo_modal);
+  
+    const fondo_modal = this.elRef.nativeElement.querySelector('#fondo_modal');
+    const modal = this.elRef.nativeElement.querySelector('#modal');
+  
+    if (fondo_modal && modal) {
+      this.renderer.setStyle(fondo_modal, 'display', 'block');
+  
+      setTimeout(() => {
+        if (fondo_modal) {
+          this.renderer.setStyle(fondo_modal, 'backgroundColor', 'rgba(88, 88, 88, 0.56)');
+        }
+      }, 200);
+  
+      this.renderer.setStyle(modal, 'display', 'block');
+  
+      setTimeout(() => {
+        if (modal) {
+          this.renderer.setStyle(modal, 'opacity', '1');
+        }
+      }, 400);
     }
   }
+  
+
+  cerrarModal() {
+    this.fondo_modal = false;
+    console.log("Modal cerrado");
+  
+    const fondo_modal = this.elRef.nativeElement.querySelector('#fondo_modal');
+    const modal = this.elRef.nativeElement.querySelector('#modal');
+  
+    if (fondo_modal && modal) {
+      setTimeout(() => {
+        if (modal) {
+          this.renderer.setStyle(modal, 'opacity', '0');
+        }
+      }, 200);
+  
+      setTimeout(() => {
+        if (modal) {
+          this.renderer.setStyle(modal, 'display', 'none');
+        }
+      }, 380);
+  
+      setTimeout(() => {
+        if (fondo_modal) {
+          this.renderer.setStyle(fondo_modal, 'backgroundColor', 'rgba(88, 88, 88, 0)');
+        }
+      }, 400);
+  
+      setTimeout(() => {
+        if (fondo_modal) {
+          this.renderer.setStyle(fondo_modal, 'display', 'none');
+        }
+      }, 580);
+    }
+  }
+  
+
+  detener_Propagacion(event: Event) {
+    event.stopPropagation();
+  }
+
+  
   
   
 

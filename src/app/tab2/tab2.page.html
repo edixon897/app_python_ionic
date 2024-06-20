@@ -79,6 +79,42 @@
     
   </table>
 
+  <div *ngIf="fondo_modal" id="fondo_modal" (click)="cerrarModal()">
+    <div id="modal_contenedor">
+      <div id="conten_informacion">
+        <div id="conten_titulo">
+          <div id="btn_cerrar" (click)="cerrarModal()">
+            <ion-icon style="color: #358cb4; font-size: 1.9em;" name="close-outline"></ion-icon>
+          </div>
+        </div>
+  
+        <div id="conten_cuerpo" (click)="detener_Propagacion($event)">
+          <div id="conten_cuerpo_todo">
+            <section id="contenedor_1_info">
+              <p>{{ detallesCliente.nombre_completo }}</p>
+            </section>
+  
+            <section class="stilo_conten_info">
+              <div></div> <p>Nit o CC: {{ detallesCliente.cliente  }}</p>
+            </section>
+  
+            <section class="stilo_conten_info">
+              <div></div> <p>Tel: {{ detallesCliente.contacto_cliente }}</p>
+            </section>
+  
+            <section class="stilo_conten_info linea_alta">
+              <div></div> <p>Email: {{ detallesCliente.email_cliente }}</p>
+            </section>
+  
+            <section id="section_final" class="stilo_conten_info">
+              <div></div> <p>Dirección: {{ detallesCliente.direccion_cliente }} - {{ detallesCliente.ciudad_cliente  }}</p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   
 
 </ion-content>

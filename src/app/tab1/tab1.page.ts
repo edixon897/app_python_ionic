@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ConexionService } from '../services/conexion.service';
 import { AlertController, AlertOptions } from '@ionic/angular';
-import { ModalProoPage } from './modal-proo/modal-proo.page';
 import { ModalController } from '@ionic/angular';
 
 

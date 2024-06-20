@@ -94,8 +94,8 @@
           <ion-content>
             <ion-card >
               <ion-item *ngFor="let producto of topProductos" >
-                <ion-title>{{ producto.producto_factura.length > 25 ? producto.producto_factura.slice(0, 25) + '...' : producto.producto_factura  }} </ion-title>
-                <ion-card-content>Cantida vendida: {{ producto.cantidad_productos_factura }}</ion-card-content>
+                <ion-title>{{ producto.producto_factura.length > 5 ? producto.producto_factura.slice(0, 8) + '...' : producto.producto_factura  }} </ion-title>
+                <ion-card-content>Cantida : {{ producto.cantidad_productos_factura }}</ion-card-content>
               </ion-item>
             </ion-card> 
             <p *ngIf="topProductos.length === 0">No hay productos en el top.</p>

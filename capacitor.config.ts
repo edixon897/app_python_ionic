@@ -5,8 +5,12 @@ const config: CapacitorConfig = {
   appName: 'softgi',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
-  }
+    androidScheme: 'http',
+    cleartext: true,
+  },
+  android: {
+    allowMixedContent: false,
+  },
 };
 
 export default config;
