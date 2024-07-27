@@ -13,7 +13,7 @@ export class ConexionService {
     return this._refresh$
   }
 
-  private baseUrl = "http://192.168.0.105:5080"; // URL del backend PHP
+  private baseUrl = "http://192.168.18.5:5080"; // URL del backend PHP
 
 
   constructor(private http: HttpClient) { }
